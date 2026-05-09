@@ -32,6 +32,9 @@ Discord: [@rei_ayanami01](https://discord.com/users/rei_ayanami01)
 - macOS (tested on macOS with Apple Silicon Tahoe)
 
 
+# *Compatibility*
+See [TESTED_ON.md](TESTED_ON.md) for the full list of tested hardware and operating systems.
+
 
 # 🚀 Quickstart
 
