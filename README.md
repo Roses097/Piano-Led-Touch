@@ -16,7 +16,7 @@ Discord: [@rei_ayanami01](https://discord.com/users/rei_ayanami01)
 
 ### Hardware
 - Arduino or ESP board (UNO, ESP32S3 etc...)
-- WS2812B LED strip (5V, 60 LEDs/meter, 1 meter)
+- WS2812B LED strip (5V, 88 LEDs strip)
 - Piano keyboard (or any 61-key MIDI keyboard)
 - 5V 3A power supply
 - USB cable
