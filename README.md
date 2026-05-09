@@ -47,7 +47,7 @@ cd piano-led-touch
 Open Arduino IDE, go in Library Manager, search MIDI Library. Install the library made by Francois Best.
 
 
-![MIDI Library](piano_led/img/library-manager.png)
+![MIDI Library](/img/library-manager.png)
 
 ### 3. Flash the ESP32
 
