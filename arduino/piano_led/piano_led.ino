@@ -1,5 +1,6 @@
 #include <MIDI.h>
 #include <FastLED.h>
+#include "colors.h"
 
 /* The values below are adjustable depending on your Keyboard*/
 

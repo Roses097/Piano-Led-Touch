@@ -6,7 +6,14 @@ import serial
 
 import serial.tools.list_ports
 
+Note_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
+
+def note_name(note):
+
+    octave = (note // 12) - 1 #get octave note
+    name = Note_names[note % 12] #get note name
+    return f"{name}{octave}"
 
 
 
@@ -57,9 +64,8 @@ while True:
 
             break
 
-        except AttributeError:
-            print("No valid MCU serial found \n"
-                "Please choose the correct port")
+        except serial.SerialException as error:
+            print(f"Could not open port: {error}")
 
     except ValueError:
         print("Please enter a number")
@@ -69,28 +75,15 @@ while True:
 
 
 
-while True:
-    try:
-        mcu_serial = serial.Serial(mcu_device, 115200)
-        print("Listening... press Ctrl+C to stop")
-
-        break
-
-    except AttributeError:
-        print("No valid MCU serial found \n"
-            "Please choose the correct port")
-
-
-
 
 with mido.open_input(midi_device) as port:
     for msg in port:
         if msg.type == 'note_on':
             mcu_serial.write(bytes([0x90, msg.note, msg.velocity]))
-            print(f"Note ON: {msg.note}")
+            print(f"Note ON: {note_name(msg.note)} {msg.note}")
         elif msg.type == 'note_off':
             mcu_serial.write(bytes([0x80, msg.note, 0]))
-            print(f"Note OFF: {msg.note}")
+            print(f"Note OFF: {note_name(msg.note)} {msg.note}")
 
 
 
