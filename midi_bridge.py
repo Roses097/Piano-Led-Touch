@@ -6,26 +6,6 @@ import serial
 
 import serial.tools.list_ports
 
-i = 0
-port_mcu = serial.tools.list_ports.comports()
-
-print("Choose your microcontroller device : ")
-for p in port_mcu :
-    i += 1
-    print( i ,p.device, p.description ) 
-
-while True:
-    try :
-        choice = int(input("Choice : "))
-        mcu_device = port_mcu[choice-1].device
-
-        break
-
-    except ValueError:
-        print("Please enter a number")
-
-    except IndexError:
-        print("Invalid choice")
 
 
 
@@ -54,8 +34,54 @@ while True:
 
 
 
-mcu_serial = serial.Serial(mcu_device, 115200)
-print("Listening... press Ctrl+C to stop")
+
+i = 0
+port_mcu = serial.tools.list_ports.comports()
+
+print("Choose your microcontroller device : ")
+
+for p in port_mcu :
+    i += 1
+    print( i ,p.device, p.description ) 
+
+
+while True:
+    try:
+
+        choice = int(input("Choice : "))
+        mcu_device = port_mcu[choice-1].device
+
+        try:
+            mcu_serial = serial.Serial(mcu_device, 115200)
+            print("Listening... press Ctrl+C to stop")
+
+            break
+
+        except AttributeError:
+            print("No valid MCU serial found \n"
+                "Please choose the correct port")
+
+    except ValueError:
+        print("Please enter a number")
+
+    except IndexError:
+        print("Invalid choice")
+
+
+
+while True:
+    try:
+        mcu_serial = serial.Serial(mcu_device, 115200)
+        print("Listening... press Ctrl+C to stop")
+
+        break
+
+    except AttributeError:
+        print("No valid MCU serial found \n"
+            "Please choose the correct port")
+
+
+
 
 with mido.open_input(midi_device) as port:
     for msg in port:
