@@ -1,5 +1,7 @@
 # 🧪 Tested on
 
+### ⚠️ *I haven't tested the project with an actual led strip but it should work*
+
 ## Microcontrollers
 | Board | Status | Tested by |
 |-------|--------|-----------|
