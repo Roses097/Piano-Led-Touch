@@ -9,6 +9,7 @@ Piano LED Touch is a project that visualizes piano playing using an MCU and a WS
 ### ✍️ Authors
 
 GitHub: [@Ray](https://github.com/roses097x)
+[![Discord](img/discord_logo.png)](https://discord.com/users/yournamehere)
 
 ---
 # 📋 Requirements
