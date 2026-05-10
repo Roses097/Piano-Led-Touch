@@ -46,7 +46,7 @@ void onNoteOn(byte channel, byte note, byte velocity) {
   int ledIndex = note - FIRST_NOTE;
   CRGB color = noteColors[note % 12]; //find the corresponding color to the key
 
-  color.nscale8(map(velocity, 0, 127, 50, 255)); //scale intensity of the key to the led intensity
+  color.nscale8(map(velocity, 0, 127, 50, 255)); //scale intensity of pressed key to the led intensity
   leds[ledIndex] = color;
 
   FastLED.show();
