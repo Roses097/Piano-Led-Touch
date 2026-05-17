@@ -2,19 +2,35 @@
 #include <FastLED.h>
 #include "colors.h"
 
-/* The values below are adjustable depending on your Keyboard*/
+// #define display_oled  // remove comment to enable screen
 
-#define LED_PIN     48  // Adjustable ---  Choose the pin you would like
+#ifdef display_oled
+  #include "display_oled.h"
+  String currentNote = "";
+  String lastNote = "";
+#endif
+
+
+/* The values below are adjustable depending on your Keyboard*/
+#define LED_PIN     8  // Adjustable ---  Choose the pin you would like
 #define NUM_LEDS    88  // Adjustable ---  Number of keys on a Yamaha p145b
 #define FIRST_NOTE  21  // Adjustable ---  C1 (First key of 88 keyboard)
 
+
 CRGB leds[NUM_LEDS];
 
-MIDI_CREATE_INSTANCE(HWCDC, Serial, MIDI);
-
-
+//MIDI_CREATE_INSTANCE(HWCDC, Serial, MIDI);
+MIDI_CREATE_INSTANCE(HardwareSerial, Serial, MIDI);
 
 void setup() {
+
+  Serial.begin(115200);
+  delay(100);
+  
+  #ifdef display_oled
+    showBoot();
+  #endif
+
 //You can request panel color in the github repo or add it yourself in the colorsNote.h 
 
   setColorTheme1(); //change this to choose your color palette ! (read the)
@@ -23,9 +39,6 @@ void setup() {
   FastLED.setBrightness(150);
   FastLED.clear();
   FastLED.show();
-
-  Serial.begin(115200);
-  delay(100);
 
   MIDI.begin(MIDI_CHANNEL_OMNI);
 
@@ -50,6 +63,13 @@ void onNoteOn(byte channel, byte note, byte velocity) {
   leds[ledIndex] = color;
 
   FastLED.show();
+
+  #ifdef display_oled
+    lastNote = currentNote;
+    currentNote = noteNames[note % 12] + String((note / 12) - 1);
+    note_display(currentNote, lastNote, ledIndex); //display (actual note / last note / note number)
+  #endif
+
   
 }
 

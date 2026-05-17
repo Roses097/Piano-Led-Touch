@@ -6,7 +6,7 @@ Light up your piano keys in real time — each key you press triggers a matching
 
 Piano LED Touch is a project that visualizes piano playing using an MCU and a WS2812B LED strip. When you press a key on a keyboard, the corresponding LED lights up in a color based on the musical note. This is my first embedded project, built to learn MCU development and MIDI communication.
 
-### ✍️ Authors
+### ✍️ Author
 
 GitHub: [@Ray](https://github.com/Roses097)
 Discord: [@rei_ayanami01](https://discord.com/users/rei_ayanami01)
@@ -15,10 +15,10 @@ Discord: [@rei_ayanami01](https://discord.com/users/rei_ayanami01)
 # 📋 Requirements
 
 ### Hardware
-- Arduino or ESP board (UNO, ESP32S3 etc...)
-- WS2812B LED strip (5V, 88 LEDs strip)
+- Any board with Native USB (ESP32-S3, Arduino Micro, etc...)
+- WS2812B LED strip (5V, 88 LEDs)
 - Piano keyboard (or any 88-key MIDI keyboard)
-- 5V 3A power supply
+- Power supply for the LED strip (5V, at least 5A recommended)
 - USB cable
 
 ### Software
@@ -26,6 +26,7 @@ Discord: [@rei_ayanami01](https://discord.com/users/rei_ayanami01)
 - Python 3
 - [FastLED](https://github.com/FastLED/FastLED) Arduino library
 - [MIDI Library](https://github.com/FortySevenEffects/arduino_midi_library) by FortySevenEffects
+- *(Optional)* [Adafruit SSD1306](https://github.com/adafruit/Adafruit_SSD1306) + [Adafruit GFX](https://github.com/adafruit/Adafruit-GFX-Library) libraries for OLED display
 - Python packages: `mido`, `pyserial`
 
 ### System
@@ -80,7 +81,7 @@ Press any key on your piano — the matching LED lights up instantly.
 
 ### Example 
 ```bash
-Yamaha P-45B (61 keys)
+Yamaha P-145B (88 keys)
         │
         │  USB MIDI
         ▼
@@ -93,7 +94,7 @@ Yamaha P-45B (61 keys)
         │  GPIO 48 (Data signal)
         ▼
   WS2812B LED Strip
-  (61 LEDs, one per key)
+  (88 LEDs, one per key)
 ```
 
 ### Python bridge
@@ -118,11 +119,46 @@ The `MIDI.h` library makes the MCU understand the MIDI data sent from the device
 ```
 
 ---
+
+# 🖥️ OLED Display (optional)
+
+The project supports an optional SSD1306 OLED screen that shows the current note, the last note played, and the key number in real time.
+
+By default, the OLED display is disabled and can be enabled by uncommenting `#define display_oled` in `piano_led.ino`:
+
+```cpp
+#define display_oled  // remove comment to enable screen
+```
+
+
+### Wiring
+
+| OLED Pin | ESP32-S3 Pin |
+|----------|--------------|
+| SDA      | GPIO 8       |
+| SCL      | GPIO 9       |
+| VCC      | 3.3V         |
+| GND      | GND          |
+
+### Display layout
+
+```
+┌─────────────────────────┐
+│          C#4            │  ← current note (large)
+│─────────────────────────│
+│   39     │     B3       │  ← key number / last note
+└─────────────────────────┘
+```
+
+
+
 # 🔮 Roadmap
 
 - [X] Velocity-based brightness — harder keypress = brighter LED (already partially implemented)
 
 - [X] Configurable color themes — change note colors via a config file
+
+- [X] OLED display support — show current note, last note and key number on a small screen (More to add later ?)
 
 - [ ] PianoBooster integration — sync LEDs with sheet music to highlight upcoming notes
 
